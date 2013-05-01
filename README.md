@@ -1,5 +1,7 @@
 # Trajectory
 
+Trajectory is an Android routing library.
+
 ````java
 
 protected void onCreate(Bundle savedInstanceState) {
