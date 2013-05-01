@@ -7,7 +7,11 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import android.content.Context;
+
 public class Trajectory {
+	
+	Context context;
 	
 	Map<String, Route> routes;
 	List<PatternRoute> patternRoutes;
@@ -24,6 +28,26 @@ public class Trajectory {
 
 	private static class LazyHolder {
 		private static Trajectory instance = new Trajectory();
+	}
+	
+	public static void setCurrentActivityContext(Context context) {
+		synchronized (LazyHolder.instance) {
+			Trajectory.getInstance().context = context;
+		}
+	}
+	
+	public static void removeCurrentActivityContext(Context context) {
+		synchronized (LazyHolder.instance) {
+			if (Trajectory.getInstance().context == context) {
+				Trajectory.getInstance().context = null;
+			}
+		}
+	}
+	
+	public static Context getCurrentActivityContext() {
+		synchronized (LazyHolder.instance) {
+			return Trajectory.getInstance().context;
+		}
 	}
 	
 	public static void setRoute(String routePattern, Route route) {
@@ -47,17 +71,17 @@ public class Trajectory {
 	}
 	
 	private void _call(String route) {
+		List<String> matches = new ArrayList<String>();
+		Map<String, String> queryParams = new HashMap<String, String>();
+		
 		Route r = routes.get(route);
 		if (r != null) {
-			r.onRoute(route, null, null);
+			r.onRoute(route, matches, queryParams);
 			return;
 		}
 		
 		for (PatternRoute patternRoute : patternRoutes) {
 			Matcher matcher = patternRoute.pattern.matcher(route);
-			
-			List<String> matches = new ArrayList<String>();
-			Map<String, String> queryParams = new HashMap<String, String>();
 			
 			boolean found = false;
 			while (matcher.find()) {
@@ -69,7 +93,7 @@ public class Trajectory {
 			}
 			
 			if (found) {
-				patternRoute.route.onRoute(route, matches, null);
+				patternRoute.route.onRoute(route, matches, queryParams);
 				return;
 			}
 			

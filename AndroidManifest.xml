@@ -9,10 +9,12 @@
         android:targetSdkVersion="16" />
 
     <application
+        android:name="com.joshdholtz.trajectory.activities.TestApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+        
         <activity
             android:name="com.joshdholtz.trajectory.activities.TestActivity"
             android:label="@string/app_name" >
@@ -22,6 +24,22 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        
+        <activity
+            android:name="com.joshdholtz.trajectory.activities.BreweryActivity"
+            android:label="@string/app_name" >
+        </activity>
+        
+        <activity
+            android:name="com.joshdholtz.trajectory.activities.BreweryListActivity"
+            android:label="@string/app_name" >
+        </activity>
+        
+        <activity
+            android:name="com.joshdholtz.trajectory.activities.BreweryBeerActivity"
+            android:label="@string/app_name" >
+        </activity>
+        
     </application>
 
 </manifest>
