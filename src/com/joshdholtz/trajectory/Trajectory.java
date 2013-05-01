@@ -56,8 +56,10 @@ public class Trajectory {
 		for (PatternRoute patternRoute : patternRoutes) {
 			Matcher matcher = patternRoute.pattern.matcher(route);
 			
-			boolean found = false;
 			List<String> matches = new ArrayList<String>();
+			Map<String, String> queryParams = new HashMap<String, String>();
+			
+			boolean found = false;
 			while (matcher.find()) {
 				for (int i = 1; i < matcher.groupCount() + 1; ++i) {
 					matches.add(matcher.group(i));

@@ -21,7 +21,7 @@ public class TestActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_test);
 		
-		Trajectory.setRoute("/beer", new Route() {
+		Trajectory.setRoute("/brewery", new Route() {
 
 			@Override
 			public void onRoute(String route, List<String> routeParams, Map<String, String> queryParams) {
@@ -49,6 +49,7 @@ public class TestActivity extends Activity {
 			
 		});
 		
+		Trajectory.call("/brewery");
 		Trajectory.call("/brewery/6");
 		Trajectory.call("/brewery/6/beer/7");
 		
