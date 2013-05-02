@@ -65,8 +65,13 @@ public void andOtherOnClickMethod() {
 public class TestApplication extends Application {
 
 	public void onCreate() {
+		# Registers a route with a String
 		Trajectory.registerForRoute(BreweryListActivity.class, "/brewery");
-		Trajectory.registerForRoute(BreweryActivity.class, Pattern.compile("^/brewery/(\\d+)$"), new String[]{"brewery_id"});
+		
+		# Register a route with a Pattern
+		Trajectory.registerForRoute(BreweryActivity.class, Pattern.compile("^/brewery/(\\d+)$"));
+		
+		# Registers a route with a Pattern with named groups
 		Trajectory.registerForRoute(BeerActivity.class, Pattern.compile("^/brewery/(\\d+)/beer/(\\d+)$"), new String[]{"brewery_id", "beer_id"});
 	}
 	
