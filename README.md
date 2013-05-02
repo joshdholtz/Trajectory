@@ -57,9 +57,9 @@ public void andOtherOnClickMethod() {
 ````
 
 
-## Example registering Activities for routes
+## Example for registering Activities for routes
 
-#### Extend Application to register routes
+#### 1. - Extend Application to register routes
 ````java
 
 public class TestApplication extends Application {
@@ -74,7 +74,7 @@ public class TestApplication extends Application {
 
 ````
 
-#### Extend TrajectoryActivity on all your activites
+#### 2. - Extend TrajectoryActivity on all your activites
 Note: Extending TrajectoryActivity does nothing more than remember the current Activities "context" so Trajectory can start an Activity
 ````java
 
@@ -97,7 +97,7 @@ public class BreweryListActivity extends TrajectoryActivity {
 
 ````
 
-#### Example AndroidManifest.xml
+#### 3. - Example AndroidManifest.xml (set the <application android:name />)
 ````xml
 
 <application
@@ -136,6 +136,7 @@ public class BreweryListActivity extends TrajectoryActivity {
 
 ````
 
+#### 4. - Call your route from somewhere
 ````java
 
 // Starts the BreweryActivity.java
