@@ -3,8 +3,8 @@ package com.joshdholtz.trajectory;
 import android.app.Activity;
 import android.os.Bundle;
 
-public class TrajectoryActivity extends Activity {
-
+public abstract class TrajectoryActivity extends Activity {
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

@@ -1,16 +1,21 @@
 package com.joshdholtz.trajectory.activities;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import com.joshdholtz.trajectory.R;
 import com.joshdholtz.trajectory.Trajectory;
+import com.joshdholtz.trajectory.TrajectoryActivity;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.TextUtils;
+import android.widget.Toast;
 
-public class BreweryListActivity extends Activity {
+public class BreweryListActivity extends TrajectoryActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +29,11 @@ public class BreweryListActivity extends Activity {
 				Trajectory.call("/brewery/6");
 			}
 		}, 5000);
+		
+		String route = this.getIntent().getStringExtra(Trajectory.INTENT_ROUTE);
+		HashMap<String, String> params = (HashMap<String, String>) this.getIntent().getSerializableExtra(Trajectory.INTENT_ROUTE_PARAMS);
+		
+		Toast.makeText(this, route, Toast.LENGTH_SHORT).show();
 	}
 	
 }

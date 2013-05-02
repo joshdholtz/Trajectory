@@ -36,7 +36,7 @@
         </activity>
         
         <activity
-            android:name="com.joshdholtz.trajectory.activities.BreweryBeerActivity"
+            android:name="com.joshdholtz.trajectory.activities.BeerActivity"
             android:label="@string/app_name" >
         </activity>
         
