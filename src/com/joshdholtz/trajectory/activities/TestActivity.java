@@ -1,5 +1,6 @@
 package com.joshdholtz.trajectory.activities;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Timer;
@@ -25,6 +26,7 @@ public class TestActivity extends TrajectoryActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_test);
 		
+		// Used for registered TrajectoryActivity testing
 		Handler handler = new Handler();
 		handler.postDelayed(new Runnable() {
 			@Override
@@ -32,10 +34,8 @@ public class TestActivity extends TrajectoryActivity {
 				Trajectory.call("/brewery");
 			}
 		}, 5000);
-		
-//		Trajectory.call("/brewery/6");
-//		Trajectory.call("/brewery/6/beer/7");
-		
+	
+		addRoutes();
 	}
 
 	@Override
@@ -45,5 +45,50 @@ public class TestActivity extends TrajectoryActivity {
 		return true;
 	}
 	
+	private void addRoutes() {
+		
+		// Sets a route that excutes when Trajectory.call("/route") is called
+		Trajectory.setRoute("/route", new Route() {
+
+			@Override
+			public void onRoute(String route, HashMap<String, String> routeParams, HashMap<String, String> queryParams) {
+				Toast.makeText(TestActivity.this, route + " - " + routeParams.toString() + " - " + queryParams.toString(), Toast.LENGTH_SHORT).show();
+			}
+			
+		});
+		
+		// Sets a route that executes when Trajectory.call("/route/N") is called where N is any integer
+		Trajectory.setRoute(Pattern.compile("^/route/(\\d+)$"), new Route() {
+
+			@Override
+			public void onRoute(String route, HashMap<String, String> routeParams, HashMap<String, String> queryParams) {
+				Toast.makeText(TestActivity.this, route + " - " + routeParams.toString() + " - " + queryParams.toString(), Toast.LENGTH_SHORT).show();
+			}
+			
+		});
+		
+		// Sets a route that executes when Trajectory.call("/route/N/subroute/M") is called where N and M are any integers
+		Trajectory.setRoute(Pattern.compile("^/route/(\\d+)/subroute/(\\d+)$"), new String[]{"route_id", "subroute_id"}, new Route() {
+
+			@Override
+			public void onRoute(String route, HashMap<String, String> routeParams, HashMap<String, String> queryParams) {
+				Toast.makeText(TestActivity.this, route + " - " + routeParams.toString() + " - " + queryParams.toString(), Toast.LENGTH_SHORT).show();
+			}
+			
+		});
+		
+	}
+	
+	public void someOnClickMethod() {
+	    Trajectory.call("/route");
+	}
+
+	public void someOtherOnClickMethod() {
+	    Trajectory.call("/route/6");
+	}
+
+	public void andOtherOnClickMethod() {
+	    Trajectory.call("/route/6/subroute/7");
+	}
 
 }

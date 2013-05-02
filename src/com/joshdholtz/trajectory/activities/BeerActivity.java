@@ -22,8 +22,10 @@ public class BeerActivity extends TrajectoryActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_beer);
 		
+		// Gets all passed in information from the registered TrajectoryActivity intent
 		String route = this.getIntent().getStringExtra(Trajectory.INTENT_ROUTE);
 		HashMap<String, String> params = (HashMap<String, String>) this.getIntent().getSerializableExtra(Trajectory.INTENT_ROUTE_PARAMS);
+		HashMap<String, String> queryParams = (HashMap<String, String>) this.getIntent().getSerializableExtra(Trajectory.INTENT_QUERY_PARAMS);
 		
 		Toast.makeText(this, route + " - " + params.toString(), Toast.LENGTH_SHORT).show();
 	}
