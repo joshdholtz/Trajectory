@@ -144,7 +144,7 @@ public class BreweryListActivity extends TrajectoryActivity {
 #### 4. - Call your route from somewhere
 ````java
 
-// Starts the BreweryActivity.java
+// Starts the BreweryListActivity.java
 Trajectory.call("/brewery");
 
 ````
