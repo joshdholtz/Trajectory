@@ -55,3 +55,90 @@ public void andOtherOnClickMethod() {
 }
 
 ````
+
+
+## Example registering Activities for routes
+
+#### Extend Application to register routes
+````java
+
+public class TestApplication extends Application {
+
+	public void onCreate() {
+		Trajectory.registerForRoute(BreweryListActivity.class, "/brewery");
+		Trajectory.registerForRoute(BreweryActivity.class, Pattern.compile("^/brewery/(\\d+)$"), new String[]{"brewery_id"});
+		Trajectory.registerForRoute(BeerActivity.class, Pattern.compile("^/brewery/(\\d+)/beer/(\\d+)$"), new String[]{"brewery_id", "beer_id"});
+	}
+	
+}
+
+````
+
+#### Extend TrajectoryActivity on all your activites
+Note: Extending TrajectoryActivity does nothing more than remember the current Activities "context" so Trajectory can start an Activity
+````java
+
+public class BreweryListActivity extends TrajectoryActivity {
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_brewery_list);
+		
+		// Gets all passed in information from the registered TrajectoryActivity intent
+		String route = this.getIntent().getStringExtra(Trajectory.INTENT_ROUTE);
+		HashMap<String, String> params = (HashMap<String, String>) this.getIntent().getSerializableExtra(Trajectory.INTENT_ROUTE_PARAMS);
+		HashMap<String, String> queryParams = (HashMap<String, String>) this.getIntent().getSerializableExtra(Trajectory.INTENT_QUERY_PARAMS);
+		
+		Toast.makeText(this, route, Toast.LENGTH_SHORT).show();
+	}
+	
+}
+
+````
+
+#### Example AndroidManifest.xml
+````xml
+
+<application
+    android:name="com.joshdholtz.trajectory.activities.TestApplication"
+    android:allowBackup="true"
+    android:icon="@drawable/ic_launcher"
+    android:label="@string/app_name"
+    android:theme="@style/AppTheme" >
+    
+    <activity
+        android:name="com.joshdholtz.trajectory.activities.TestActivity"
+        android:label="@string/app_name" >
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+    </activity>
+    
+    <activity
+        android:name="com.joshdholtz.trajectory.activities.BreweryActivity"
+        android:label="@string/app_name" >
+    </activity>
+    
+    <activity
+        android:name="com.joshdholtz.trajectory.activities.BreweryListActivity"
+        android:label="@string/app_name" >
+    </activity>
+    
+    <activity
+        android:name="com.joshdholtz.trajectory.activities.BeerActivity"
+        android:label="@string/app_name" >
+    </activity>
+    
+</application>
+
+````
+
+````java
+
+// Starts the BreweryActivity.java
+Trajectory.call("/brewery");
+
+````
