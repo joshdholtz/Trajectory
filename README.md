@@ -2,7 +2,7 @@
 
 Trajectory is an Android routing library.
 
-Download [trajectory-0.0.2.jar](https://github.com/joshdholtz/Trajectory/raw/master/builds/trajectory-0.0.1.jar)
+Download [trajectory-0.0.2.jar](https://github.com/joshdholtz/Trajectory/raw/master/builds/trajectory-0.0.2.jar)
 
 ## Changes coming soon
 - Pulling query parameters from a route (skeleton-ed out but not functional yet)
