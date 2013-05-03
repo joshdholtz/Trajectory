@@ -76,9 +76,15 @@ public class Trajectory {
 		Trajectory.getInstance()._call(route);
 	}
 	
-	private void _call(String route) {
+	private void _call(String routeWithQueryParams) {
+		String route = routeWithQueryParams;
 		HashMap<String, String> matches = new HashMap<String, String>();
-		HashMap<String, String> queryParams = new HashMap<String, String>();
+		HashMap<String, String> queryParams = _parseQueryParams(routeWithQueryParams);
+		
+		int indexOfQuery = routeWithQueryParams.indexOf("?");
+		if (indexOfQuery != -1) {
+			route = routeWithQueryParams.substring(0, indexOfQuery);
+		}
 		
 		Route r = routes.get(route);
 		if (r != null) {
@@ -110,6 +116,31 @@ public class Trajectory {
 				return;
 			}
 		}
+	}
+	
+	private HashMap<String, String> _parseQueryParams(String route) {
+		HashMap<String, String> queryParams = new HashMap<String, String>();
+		
+		int indexOfQuery = route.indexOf("?");
+		if (indexOfQuery == -1) {
+			return queryParams;
+		}
+		
+		String queryParamsStr = route.substring(indexOfQuery + 1);
+		String[] queryParamParts = queryParamsStr.split("&");
+		for (String queryParamPart : queryParamParts) {
+			String key = queryParamPart;
+			String value = "";
+			int indexOfEquals = queryParamPart.indexOf("=");
+			if (indexOfEquals != -1) {
+				key = queryParamPart.split("=")[0];
+				value = queryParamPart.split("=")[1];
+			}
+			
+			queryParams.put(key, value);
+		}
+		
+		return queryParams;
 	}
 	
 	private class PatternRoute {
